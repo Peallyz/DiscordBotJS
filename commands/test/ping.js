@@ -5,6 +5,10 @@ module.exports = {
     .setName("ping")
     .setDescription("Replies with pong !"),
   async execute(interaction) {
-    await interaction.reply(`Pong  envoyé par ${interaction.client.username}!`);
+    await interaction.reply(
+      `Pong  envoyé par ${interaction.client.user.username} à ${new Date(
+        interaction.createdTimestamp
+      )}!`
+    );
   },
 };
