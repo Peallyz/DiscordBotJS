@@ -1,5 +1,5 @@
 const {Events} = require("discord.js");
-const embedConstructor = require("../components/Embed" );
+const {embedConstructor} = require("../components/Embed");
 
 module.exports = {
     name: Events.MessageDelete,
@@ -10,9 +10,17 @@ module.exports = {
             .then((audit) =>
                 message.guild.channels.fetch()
                     .then((channels) =>
-                    channels.find((channel) => channel.name === "logs").send(
-                        { embeds: [ embedConstructor() ] }
-                    )))
-                    .catch(err => console.log(err));
+                        channels.find((channel) => channel.name === "logs").send(
+                            {
+                                embeds: [embedConstructor(
+                                    "messageDelete",
+                                    `${message.client.user.tag}`,
+                                    `${audit.entries.first().executor.username}`,
+                                    `${message.author.username}`,
+                                    `${message}`)
+                                ]
+                            }
+                        )))
+            .catch(err => console.log(err));
     },
 };
