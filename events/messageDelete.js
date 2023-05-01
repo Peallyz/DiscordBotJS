@@ -1,11 +1,11 @@
 const { Events } = require("discord.js");
 const { embedConstructor } = require("../components/Embed");
-const { createLogChannel } = require("../createLogChannel.js");
+// const { createLogChannel } = require("../createLogChannel.js");
 
 module.exports = {
   name: Events.MessageDelete,
   async execute(message) {
-    createLogChannel(message);
+    // createLogChannel(message);
 
     message.guild.channels
       .fetch()

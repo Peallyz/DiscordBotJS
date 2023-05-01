@@ -5,10 +5,10 @@ function embedConstructor(type, content) {
   switch (type) {
     case "messageDelete": {
       const anthyra = content.guild.members.cache.find(
-        (user) => user.id === "819175877816352780"
+        (user) => user.id === process.env.ANTHYRA_ID
       ).user;
       const peally = content.guild.members.cache.find(
-        (test) => test.id === "290083594586554370"
+        (user) => user.id === process.env.PEALLY_ID
       ).user;
 
       // inside a command, event listener, etc.
