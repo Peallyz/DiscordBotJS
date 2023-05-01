@@ -1,23 +1,18 @@
-const { Events } = require("discord.js");
+const {Events} = require("discord.js");
+const embedConstructor = require("../components/Embed" );
 
 module.exports = {
-  name: Events.MessageDelete,
-  async execute(message) {
-    message.guild
-      .fetchAuditLogs()
-      .then((audit) =>
-        console.log(
-          `${
-            audit.entries.first().executor.username
-          } a supprimé un message honteux`
-        )
-      )
-      .catch(console.error);
-
-    message.author
-      .send("Nous avons supprimé ton ignoble message envers nos élèves !!")
-      .then((messageSend) =>
-        console.log(`Le message : ${messageSend} a été envoyé`)
-      );
-  },
+    name: Events.MessageDelete,
+    timeout: 5000,
+    async execute(message) {
+        message.guild
+            .fetchAuditLogs()
+            .then((audit) =>
+                message.guild.channels.fetch()
+                    .then((channels) =>
+                    channels.find((channel) => channel.name === "logs").send(
+                        { embeds: [ embedConstructor() ] }
+                    )))
+                    .catch(err => console.log(err));
+    },
 };
