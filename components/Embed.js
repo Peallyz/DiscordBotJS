@@ -1,90 +1,34 @@
 // at the top of your file
-const { EmbedBuilder } = require("discord.js");
+const {EmbedBuilder} = require("discord.js");
 
 function embedConstructor(
-  type,
-  author = "Nezu",
-  executor,
-  messageAuthor,
-  message
+    type,
+    content
 ) {
-  switch (type) {
-    case "messageDelete": {
-      // inside a command, event listener, etc.
-      return new EmbedBuilder()
-        .setColor("Red")
-        .setTitle("Suppression d'un message")
-        .setURL("https://discord.js.org/")
-        .setAuthor({
-          name: author,
-          iconURL: "https://i.imgur.com/AfFp7pu.png",
-          url: "https://discord.js.org",
-        })
-        .setDescription(`${executor} à supprimer un message`)
-        .setThumbnail("https://i.imgur.com/AfFp7pu.png")
-        .addFields(
-          { name: `Message de : ${messageAuthor}`, value: message },
-          {
-            name: "Inline field title",
-            value: "Some value here",
-            inline: true,
-          },
-          { name: "Inline field title", value: "Some value here", inline: true }
-        )
-        .setImage("https://i.imgur.com/AfFp7pu.png")
-        .setTimestamp()
-        .addFields({
-          name: "Inline field title",
-          value: "Some value here",
-          inline: true,
-          url: "https://discord.js.org",
-        })
-        .setFooter({
-          text: "Some footer text here",
-          iconURL: "https://i.imgur.com/AfFp7pu.png",
-          inline: true,
-        });
+
+    switch (type) {
+        case "messageDelete": {
+            const anthyra = content.guild.members.cache.find(user => user.id === '819175877816352780').user;
+            const peally = content.guild.members.cache.find(test => test.id === '290083594586554370').user;
+
+            // inside a command, event listener, etc.
+            return new EmbedBuilder()
+                .setColor("Red")
+                .setTitle(`Suppression d'un message dans #${content.guild.channels.cache.get(content.channelId).name}`)
+                .setAuthor({
+                    name: content.author.tag,
+                    iconURL: content.author.avatarURL(),
+                    url: "https://discord.js.org",
+                })
+                .setDescription(`${content}`)
+                .setThumbnail(content.guild.iconURL())
+                .setTimestamp()
+                .setFooter({
+                    text: `Bot réalisé par ${anthyra ? anthyra.tag : "Anthyra"} et ${peally ? peally.tag : "Peally"}`,
+                    iconURL: content.guild.client.user.avatarURL(),
+                });
+        }
     }
-    case "channelDelete": {
-      // inside a command, event listener, etc.
-      return new EmbedBuilder()
-        .setColor(0x0099ff)
-        .setTitle("Suppression d'un channel")
-        .setURL("https://discord.js.org/")
-        .setAuthor({
-          name: "Some name",
-          iconURL: "https://i.imgur.com/AfFp7pu.png",
-          url: "https://discord.js.org",
-        })
-        .setDescription("Some description here")
-        .setThumbnail("https://i.imgur.com/AfFp7pu.png")
-        .addFields(
-          { name: "Regular field title", value: "Some value here" },
-          { name: "\u200B", value: "\u200B" },
-          {
-            name: "Inline field title",
-            value: "Some value here",
-            inline: true,
-          },
-          {
-            name: "Inline field title",
-            value: "Some value here",
-            inline: true,
-          }
-        )
-        .addFields({
-          name: "Inline field title",
-          value: "Some value here",
-          inline: true,
-        })
-        .setImage("https://i.imgur.com/AfFp7pu.png")
-        .setTimestamp()
-        .setFooter({
-          text: "Some footer text here",
-          iconURL: "https://i.imgur.com/AfFp7pu.png",
-        });
-    }
-  }
 }
 
-module.exports = { embedConstructor };
+module.exports = {embedConstructor};
