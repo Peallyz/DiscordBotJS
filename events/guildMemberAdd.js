@@ -8,17 +8,17 @@ module.exports = {
     const img = await getRandomGif();
 
     const embed = new EmbedBuilder()
-      .setTitle(`Bienvenue sur le serveur !`)
+      .setTitle(`Bienvenue ${member.user.username} sur le serveur !`)
       .setColor("#006e5f")
-      .setAuthor({
-        name: member.client.user.username,
+      .setImage(img)
+      .setFooter({
+        text: "V.0.1",
         iconURL: member.client.user.avatarURL(),
       })
-      .setImage(img);
+      .setTimestamp();
 
-    await member.guild.channels
-      .fetch()
-      .find((channel) => channel.type === 5)
+    await member.guild.channels.cache
+      .get(member.guild.systemChannelId)
       .send({ embeds: [embed] });
   },
 };
